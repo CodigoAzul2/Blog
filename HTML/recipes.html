@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+		<meta
+			name="description"
+			content="Un blog de cocina para divulgación de recetas y tips relevantes" />
+		<meta name="author" content="Antonio H" />
+		<meta name="copyright" content="Carlos H" />
+		<title>Cocina</title>
+
+		<link rel="stylesheet" href="../CSS/styles.css" />
+		<link rel="icon" href="../Recursos/chef_icon.png" />
+	</head>
+	<body>
+		<main>
+			<header>
+				<h1>BLOG DE COCINA</h1>
+			</header>
+
+			<aside>
+				<input type="checkbox" id="hidden" />
+				<label for="hidden" id="menuLogo">
+					<div></div>
+					<div></div>
+					<div></div>
+				</label>
+				<section id="headerMenu">MENU</section>
+
+				<section id="home">Inicio</section>
+
+				<!-- Inserción de código -->
+
+				<section id="edit">Editar</section>
+				<dialog id="security" style="width: 300px;">
+					<form>
+						<article>
+							<label for="user">Usuario:</label>
+							<input
+								type="text"
+								id="user"
+								name="user"
+								autofocus
+								placeholder="marcelo07"
+								size="8"
+								autocomplete="username"
+								required />
+						</article>
+
+						<article>
+							<label for="pass">Contraseña:</label>
+							<input
+								type="password"
+								id="pass"
+								name="pass"
+								placeholder="9462_mar"
+								maxlength="8"
+								minlength="8"
+								size="8"
+								autocomplete="current-password"
+								required />
+						</article>
+
+						<article>
+							<label for="showPass">Mostrar contraseñas</label>
+							<input id="showPass" type="checkbox" />
+						</article>
+
+						<article>
+							<label for="changeAccount">Cambiar cuenta</label>
+							<input id="changeAccount" type="checkbox" />
+						</article>
+
+						<article id="hide" style="display: none">
+							<hr>
+
+							<div>
+								<label for="newUser">Nuevo usuario</label>
+								<input
+									type="text"
+									id="newUser"
+									name="newUser"
+									placeholder="pepito#Z"
+									size="8"
+									autocomplete="username" />
+							</div>
+
+							<div>
+								<label for="newPass">Nueva contraseña:</label>
+								<input
+									type="password"
+									id="newPass"
+									name="newPass"
+									placeholder="mAnza249"
+									maxlength="8"
+									minlength="8"
+									autocomplete="new-password"
+									size="8" />
+							</div>
+						</article>
+
+						<nav>
+							<button type="reset">Borrar</button>
+							<button type="submit">Aceptar</button>
+							<button type="button" class="closeModel">
+								Cerrar
+							</button>
+						</nav>
+					</form>
+				</dialog>
+			</aside>
+
+			<article id="gallery"></article>
+		</main>
+
+		<footer>
+			<p><strong>Director:</strong> Antonio H</p>
+			<p><strong>Productor:</strong> Carlos H</p>
+		</footer>
+
+		<script type="module" src="../JS/main.js"></script>
+	</body>
+</html>

@@ -1,0 +1,11 @@
+{
+  "name": "blog",
+  "version": "1.0.0",
+  "description": "Servidor para pruebas",
+  "main": "index.js",
+  "scripts": {
+    "json:server": "json-server --watch keepAcc.json"
+  },
+  "author": "",
+  "license": "ISC"
+}

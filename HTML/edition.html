@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+	<meta name="description" content="Un blog de cocina para divulgación de recetas y tips relevantes" />
+	<meta name="author" content="Antonio H" />
+	<meta name="copyright" content="Carlos H" />
+	<title>Edición</title>
+
+	<link rel="stylesheet" href="../CSS/styles.css" />
+	<link rel="icon" href="../Recursos/chef_icon.png" />
+</head>
+
+<body>
+	<main>
+		<header>
+			<h1>EDICIÓN</h1>
+		</header>
+
+		<aside class="animation-allowed">
+			<input type="checkbox" id="hidden" />
+			<label for="hidden" id="menuLogo">
+				<div></div>
+				<div></div>
+				<div></div>
+			</label>
+			<section id="headerMenu">MENU</section>
+
+			<section id="home">Inicio</section>
+
+			<!-- Inserción de código -->
+
+			<section id="edit">Editar</section>
+		</aside>
+
+		<form id="editForm">
+			<section>
+				<label for="title">*Título:</label>
+				<input type="text" name="title" id="title" required />
+			</section>
+
+			<section>
+				<label for="subtitle">Subtítulo:</label>
+				<input type="text" name="subtitle" id="subtitle" size="48" />
+			</section>
+
+			<section>
+				<label for="photo">Fotografía:</label>
+				<section>
+					<input type="file" accept="image/*" name="photo" id="photo">
+					<img src="" id="preview">
+				</section>
+			</section>
+
+			<section>
+				<label for="ingredients">*Ingredientes:</label>
+				<textarea name="ingredients" id="ingredients" cols="50" rows="5" required></textarea>
+			</section>
+
+			<section>
+				<label for="preparation">*Preparación:</label>
+				<textarea name="preparation" id="preparation" cols="50" rows="5" required></textarea>
+			</section>
+
+			<section>
+				<label for="change">Cambio:</label>
+				<select name="change" id="change">
+					<option></option>
+				</select>
+			</section>
+
+			<section>
+				<label for="remove">Eliminar receta seleccionada:</label>
+				<input type="checkbox" name="remove" id="remove">
+			</section>
+
+			<nav>
+				<button type="reset" id="erase">Borrar</button>
+				<button type="submit">Actualizar</button>
+			</nav>
+		</form>
+	</main>
+
+	<footer>
+		<p><strong>Director:</strong> Antonio H</p>
+		<p><strong>Productor:</strong> Carlos H</p>
+	</footer>
+
+	<script type="module" src="../JS/edit.js"></script>
+</body>
+
+</html>
