@@ -1,7 +1,7 @@
-import { $, $$, bt_dlg, connect, manage } from './module.js'
+import { $, $$, newEl, bt_dlg, connect, manage } from './module.js'
 const $edit = $('#edit'), $oldPass = $('#pass'),
 	$newPass = $('#newPass'), $oldUser = $('#user'),
-	$newUser = $('#newUser')
+	$newUser = $('#newUser'), $recipOpt = $('#recipOpt')
 
 connect()
 fetch('http://localhost:3000/recipe_book')
@@ -22,22 +22,33 @@ fetch('http://localhost:3000/recipe_book')
 		bt_dlg($$('button.closeModel'), $$('dialog'), 'close')
 
 		json.forms.forEach(obj => {
-			const newPhoto = document.createElement('section')
-			const newTitle = document.createElement('div')
+			// const newRec = newEl('option')
+			// newRec.value = obj.title
+			// newRec.textContent = obj.category
+			// $recipOpt.appendChild(newRec)
+
+			const newPhoto = newEl('section')
+			const newTitle = newEl('div')
 			newTitle.textContent = obj.title
 			newTitle.className = 'title'
 			if (obj.photo) {
-				const newBgnd = document.createElement('div')
+				const newBgnd = newEl('div')
 				newBgnd.className = 'bgnd'
 				newBgnd.style = `background-image: url(${obj.photo});`
 				newPhoto.appendChild(newBgnd)
 			}
 			newPhoto.appendChild(newTitle)
 			$('#gallery').appendChild(newPhoto)
-			newPhoto.style = `width: ${newTitle.clientWidth + 20}px;`
+			newPhoto.style = `
+			width: ${newTitle.clientWidth + 30}px;`
+				// + 'display: none;'
 		})
 	})
 	.catch(err => console.warn(err))
+
+// $recipOpt.addEventListener('change', () => {
+
+// })
 
 //============> FORMULARIO <==============
 //'Mostrar contraseñas'

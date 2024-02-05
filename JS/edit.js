@@ -1,6 +1,6 @@
-import { $, $$, bt_dlg, connect, manage } from './module.js'
+import { $, $$, newEl, bt_dlg, connect, manage } from './module.js'
 const $edit = $('#edit'), $preview = $('#preview'),
-	$photo = $('#photo'), $change = $('#change'), $$dialog = $$('dialog')
+	$photo = $('#photo')
 
 connect()
 $edit.addEventListener('click', () => window.location.reload())
@@ -25,14 +25,15 @@ fetch('http://localhost:3000/recipe_book')
 		n = data.count
 		$edit.style = `top: ${(n - 1) * 20 + 95}px;`
 		$edit.insertAdjacentHTML('beforebegin', recipes)
+		const $$dialog = $$('dialog')
 		bt_dlg($$('aside > section:not([id])'), $$dialog, 'showModal')
 		bt_dlg($$('button.closeModel'), $$dialog, 'close')
 
 		data.forms.forEach(obj => {
-			const newOpt = document.createElement('option')
+			const newOpt = newEl('option')
 			newOpt.value = obj.title
 			newOpt.textContent = obj.title
-			$change.appendChild(newOpt)
+			$('#change').appendChild(newOpt)
 		})
 	})
 	.catch(err => console.warn(err))
@@ -50,17 +51,21 @@ $('#editForm').addEventListener('submit', event => {
 				<button type="button" class="closeModel">Cerrar</button>
 				<h2>${formData.title}</h2>
 				${formData.subtitle ? `<h3 class="sub-title">${formData.subtitle}</h3>` : ''}
-				<ol>
+				<ul>
 					<li>
 						<h3>INGREDIENTES:</h3>
-						<p>${formData.ingredients}</p>
+						<ul>
+							<li>${formData.ingredients.replaceAll('\n', '</li> <li>')}</li>
+						</ul>
 					</li>
 
 					<li>
 						<h3>PREPARACIÓN:</h3>
-						<p>${formData.preparation}</p>
+						<ul>
+							<li>${formData.preparation}</li>
+						</ul>
 					</li>
-				</ol>
+				</ul>
 
 				<div class="back" style="background-image: url(${url ?? ''});"></div>
 			</dialog>`
