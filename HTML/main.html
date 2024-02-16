@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<title>Cocina</title>
+
+	<link rel="icon" href="../Recursos/chef_icon.png" />
+	<link rel="stylesheet" href="../CSS/common.css" />
+	<link rel="stylesheet" href="../CSS/main.css" />
+
+	<script type="module" src="../JS/main.js" defer></script>
+
+</head>
+
+<body class="background">
+	<main class="main">
+		<h1 class="title">BLOG DE COCINA</h1>
+
+		<aside class="aside">
+			<input type="checkbox" id="hidden" />
+			<label for="hidden">
+				<div></div>
+				<div></div>
+				<div></div>
+			</label>
+			<section id="headerMenu">MENU</section>
+
+			<section id="home">Inicio</section>
+
+			<!-- Inyección de código -->
+
+			<section id="edit">Editar</section>
+			<dialog class="security">
+				<form>
+					<article>
+						<label for="user">Usuario:</label>
+						<input type="text" id="user" name="user" autofocus placeholder="marcelo07" size="8"
+							autocomplete="username" required />
+					</article>
+
+					<article>
+						<label for="pass">Contraseña:</label>
+						<input type="password" id="pass" name="pass" placeholder="9462_mar" maxlength="8" minlength="8"
+							size="8" autocomplete="current-password" required />
+					</article>
+
+					<article>
+						<label for="showPass">Mostrar contraseñas</label>
+						<input id="showPass" type="checkbox" />
+					</article>
+
+					<article id="ref">
+						<label for="changeAccount">Cambiar cuenta</label>
+						<input id="changeAccount" type="checkbox" />
+					</article>
+
+					<article>
+						<hr>
+
+						<div>
+							<label for="newUser">Nuevo usuario</label>
+							<input type="text" id="newUser" name="newUser" placeholder="pepito#Z" size="8"
+								autocomplete="username" />
+						</div>
+
+						<div>
+							<label for="newPass">Nueva contraseña:</label>
+							<input type="password" id="newPass" name="newPass" placeholder="mAnza249" maxlength="8"
+								minlength="8" autocomplete="new-password" size="8" />
+						</div>
+					</article>
+
+					<nav>
+						<button type="reset">Borrar</button>
+						<button type="submit">Aceptar</button>
+						<button type="button" class="closeModel">
+							Cerrar
+						</button>
+					</nav>
+				</form>
+			</dialog>
+		</aside>
+
+		<input type="search" list="recipOpt" id="searchField">
+		<datalist id="recipOpt"></datalist>
+	</main>
+	<re-foot></re-foot>
+</body>
+
+</html>

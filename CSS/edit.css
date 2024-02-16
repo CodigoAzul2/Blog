@@ -1,0 +1,100 @@
+.modifying {
+	background-color: #fff2c9e6;
+}
+
+.removing {
+	background-color: #ffcfcfe6;
+}
+
+.header {
+	position: relative;
+	right: 29px;
+	display: flex;
+	align-items: center;
+	gap: 29px;
+}
+
+.link {
+	display: flex;
+	color: black;
+	background-color: #ffffff8e;
+	font-size: large;
+	font-weight: bold;
+	text-decoration: none;
+	border-radius: 25px;
+	padding-right: 5px;
+	border: solid #f2e3c2 5px;
+	box-shadow: 0 0 10px 2px #ffffff8e;
+	transition: all 0.15s;
+
+	&::before {
+		content: "";
+		display: block;
+		width: 20px;
+		aspect-ratio: 1/1;
+		background-image: url('../Recursos/arrow.png');
+		background-position: center;
+		background-size: cover;
+		background-repeat: space;
+	}
+
+	&:hover {
+		transform: scale(120%);
+	}
+}
+
+form {
+	width: 80%;
+	max-width: 800px;
+	min-width: min-content;
+
+	> :not(:last-child) {
+		border-bottom: gray 1px dotted;
+		padding-bottom: 5px;
+	}
+
+	label {
+		margin-left: 10px;
+	}
+
+	input,
+	textarea {
+		font-family: Arial;
+
+		&:focus {
+			background-color: lightyellow;
+		}
+	}
+
+	input,
+	textarea,
+	select {
+		background-color: #ffffff8e;
+		border: 1px solid gray;
+		border-radius: 2px;
+	}
+
+	.modify {
+		flex-direction: column;
+		gap: 15px;
+
+		article {
+			width: 100%;
+			display: flex;
+			justify-content: space-between;
+			align-items: center;
+		}
+
+		article:not(:has(:checked))~.choose {
+			display: none;
+		}
+
+		article:has(:checked)~.choose {
+			display: flex;
+		}
+	}
+
+	button {
+		mix-blend-mode: exclusion;
+	}
+}

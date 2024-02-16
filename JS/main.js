@@ -1,65 +1,94 @@
-import { $, $$, newEl, bt_dlg, connect, manage } from './module.js'
-const $edit = $('#edit'), $oldPass = $('#pass'),
-	$newPass = $('#newPass'), $oldUser = $('#user'),
-	$newUser = $('#newUser'), $recipOpt = $('#recipOpt')
+import { $, $$, manage, Foot } from './module.js'
+customElements.define('re-foot', Foot)
 
-connect()
+//------------------->Connect
+//Redirigir
+$('#home').addEventListener('click', () =>
+	location.reload()
+)
+
+const $recipOpt = $('#recipOpt')
 fetch('http://localhost:3000/recipe_book')
 	.then(manage)
 	.then(json => {
 		console.log(json)
 
 		//Insertar recetas
-		$edit.insertAdjacentHTML('beforebegin', json.recipes)
-		$edit.style = `top: ${(json.count - 1) * 20 + 95}px;`
+		const $edit = $('#edit')
+		// $edit.insertAdjacentHTML('beforebegin', json.recipes)
+		$edit.style = `top: ${(json.forms.length - 1) * 19 + 75}px;`
 
 		//Funcionalidad
-		bt_dlg(
-			[...$$('aside > section:not([id])'), $edit],
-			[...$$('aside > section:not([id]) + dialog'), $('#security')],
-			'showModal'
-		)
-		bt_dlg($$('button.closeModel'), $$('dialog'), 'close')
+		function relate(actuators, patient, action) {
+			const tempArr = []
+
+			actuators.forEach((ref, i) => {
+				const act = patient[i]
+				tempArr.push({ ref, act })
+			})
+			actuators.forEach(ref => {
+				ref.addEventListener('click', event => {
+					tempArr.find(pair => pair.ref === event.target).act[action]()
+				})
+			})
+		}
 
 		json.forms.forEach(obj => {
-			// const newRec = newEl('option')
-			// newRec.value = obj.title
-			// newRec.textContent = obj.category
-			// $recipOpt.appendChild(newRec)
+			$edit.insertAdjacentHTML(
+				'beforebegin',
+				`<section>${obj.title}</section>
+				<dialog>
+					<button type="button" class="closeModel">Cerrar</button>
+					<h2>${obj.title}</h2>
+					${obj.subtitle ? `<h3 class="sub-title">${obj.subtitle}</h3>` : ''}
+					<ul>
+						<li>
+							<h3>INGREDIENTES:</h3>
+							<ul>
+								<li>${obj.ingredients.replaceAll('\n', '</li> <li>')}</li>
+							</ul>
+						</li>
 
-			const newPhoto = newEl('section')
-			const newTitle = newEl('div')
-			newTitle.textContent = obj.title
-			newTitle.className = 'title'
-			if (obj.photo) {
-				const newBgnd = newEl('div')
-				newBgnd.className = 'bgnd'
-				newBgnd.style = `background-image: url(${obj.photo});`
-				newPhoto.appendChild(newBgnd)
-			}
-			newPhoto.appendChild(newTitle)
-			$('#gallery').appendChild(newPhoto)
-			newPhoto.style = `
-			width: ${newTitle.clientWidth + 30}px;`
-				// + 'display: none;'
+						<li>
+							<h3>PREPARACIÓN:</h3>
+							<ul>
+								<li>${obj.preparation.replaceAll('\n', '</li> <li>')}</li>
+							</ul>
+						</li>
+					</ul>
+
+					<div class="back" style="background-image: url(${obj.photo ?? ''});"></div>
+				</dialog>`
+			)
+
+			$recipOpt.insertAdjacentHTML(
+				'beforeend',
+				`<option value="${obj.title}">${obj.category ?? ''}</option>`
+			)
 		})
+
+		const $$recipes = [...$$('aside > section:not([id])'), $edit]
+		const $$dialogs = $$('dialog')
+		const $$close = $$('button.closeModel')
+		relate($$recipes, $$dialogs, 'showModal')
+		relate($$close, $$dialogs, 'close')
 	})
 	.catch(err => console.warn(err))
 
-// $recipOpt.addEventListener('change', () => {
-
+// $recipOpt.addEventListener('search', () => {
+// 	if ($('#searchField').value === (a)) { }
 // })
 
 //============> FORMULARIO <==============
 //'Mostrar contraseñas'
+const $oldPass = $('#pass'), $newPass = $('#newPass')
 $('#showPass').addEventListener('change', () => {
 	$oldPass.type = ($oldPass.type === 'password') ? 'text' : 'password'
 	$newPass.type = ($newPass.type === 'password') ? 'text' : 'password'
 })
 //'Cambiar contraseña'
-$('#changeAccount').addEventListener('change', event => {
-	$('#hide').style = event.target.checked ? '' : 'display: none;'
-
+const $oldUser = $('#user'), $newUser = $('#newUser')
+$('#changeAccount').addEventListener('change', () => {
 	$newPass.toggleAttribute('required')
 	$newUser.toggleAttribute('required')
 })
@@ -79,12 +108,6 @@ $('form').addEventListener('submit', event => {
 		.then(data => {
 			console.log('json', data)
 
-			const delay = 1000
-			const ansToggle = opt => {
-				$oldUser.toggleAttribute(opt)
-				$oldPass.toggleAttribute(opt)
-			}
-
 			if (JSON.stringify(data) === JSON.stringify(account)) {
 				if (formData.newUser || formData.newPass) {
 					fetch('http://localhost:3000/account', {
@@ -96,25 +119,9 @@ $('form').addEventListener('submit', event => {
 					})
 						.then(manage)
 						.then(json => console.log(json))
-					ansToggle('correct')
-					setTimeout(() => {
-						ansToggle('correct')
-						window.location.reload()
-					}, delay)
-				} else {
-					ansToggle('correct')
-					setTimeout(() => {
-						ansToggle('correct')
-						window.location.assign('edition.html')
-					}, delay)
-				}
-			} else {
-				ansToggle('incorrect')
-				setTimeout(() => {
-					ansToggle('incorrect')
-					window.location.reload()
-				}, delay)
-			}
+					location.reload()
+				} else location.assign('../HTML/edit.html')
+			} else location.reload()
 		})
 		.catch(error => console.warn(error))
 })

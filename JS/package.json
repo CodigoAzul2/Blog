@@ -4,7 +4,7 @@
   "description": "Servidor para pruebas",
   "main": "index.js",
   "scripts": {
-    "json:server": "json-server --watch keepAcc.json"
+    "json:server": "json-server --watch keep.json"
   },
   "author": "",
   "license": "ISC"

@@ -1,0 +1,50 @@
+.background {
+	margin: 0;
+	font-family: Cambria, Georgia, Times;
+	background-image: url(../Recursos/back_img.jpg);
+	background-size: 350px;
+}
+
+.main {
+	margin: 10px;
+	padding-block: 20px;
+	border-radius: 30px;
+	background-color: #ffffffe6;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	gap: 20px;
+}
+
+.title {
+	margin: 0px;
+	padding: 5px 50px;
+	border-radius: 40px;
+	background-color: #f2e3c2;
+	font-size: 2.2em;
+	text-decoration: underline;
+}
+
+re-foot {
+	display: block;
+	margin: 10px;
+	padding: 10px;
+	border-radius: 30px;
+	background-color: #e3c2f2e6;
+
+	>* {
+		margin: 0px 0px 0px 50px;
+	}
+}
+
+form {
+	display: flex;
+	flex-direction: column;
+	gap: 5px;
+
+	>* {
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+	}
+}

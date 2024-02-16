@@ -1,124 +1,110 @@
-import { $, $$, newEl, bt_dlg, connect, manage } from './module.js'
-const $edit = $('#edit'), $preview = $('#preview'),
-	$photo = $('#photo')
+import { $, $$, manage, Foot } from './module.js'
+customElements.define('re-foot', Foot)
 
-connect()
-$edit.addEventListener('click', () => window.location.reload())
-$photo.addEventListener('change', () => {
-	const [img] = $photo.files
-	console.log(img)
-	if (img) {
-		$preview.style = 'display: block;'
-		$preview.src = URL.createObjectURL(img)
-	} else $preview.style = 'display: none;'
+//============> MODIFY <==============
+$('#erase').addEventListener('click', () => location.reload())
+
+$$('input[name="modify"]').forEach(inp => {
+	inp.addEventListener('change', () => {
+		const removing = $('#remove').checked
+		$('#title').toggleAttribute('required', !removing)
+
+		$('.main').classList.toggle('modifying', !removing)
+		$('.main').classList.toggle('removing', removing)
+
+		$$('section:not(.modify)').forEach(sec => {
+			sec.style = removing ? 'display: none;' : ''
+		})
+	})
 })
-$('#erase').addEventListener('click', () => $preview.style = 'display: none;')
 
-//========================> Recetas
-let recipes, lastFormData, n
+//============> RECETAS <==============
+let lastFormData
+const catArr = []
 fetch('http://localhost:3000/recipe_book')
 	.then(manage)
 	.then(data => {
 		console.log(data)
-		recipes = data.recipes
 		lastFormData = data.forms
-		n = data.count
-		$edit.style = `top: ${(n - 1) * 20 + 95}px;`
-		$edit.insertAdjacentHTML('beforebegin', recipes)
-		const $$dialog = $$('dialog')
-		bt_dlg($$('aside > section:not([id])'), $$dialog, 'showModal')
-		bt_dlg($$('button.closeModel'), $$dialog, 'close')
 
 		data.forms.forEach(obj => {
-			const newOpt = newEl('option')
-			newOpt.value = obj.title
-			newOpt.textContent = obj.title
-			$('#change').appendChild(newOpt)
+			$('#choose').insertAdjacentHTML(
+				'beforeend',
+				`<option>${obj.title}</option>`
+			)
+			obj.category && catArr.push(obj.category)
 		})
+
+		catArr
+			.filter((el, i) => catArr.indexOf(el) === i)
+			.forEach(cat => {
+				$('#category').insertAdjacentHTML(
+					'beforeend',
+					`<option>${cat}</option>`
+				)
+			})
 	})
 	.catch(err => console.warn(err))
 
 //============> FORMULARIO <==============
-$('#editForm').addEventListener('submit', event => {
+$('form').addEventListener('submit', event => {
 	event.preventDefault()
 	const formData = Object.fromEntries(new FormData(event.target))
 
-	if (!lastFormData.some(obj => obj.title === formData.title) || formData.change) {
-		const fetchPUT = url => {
-			const recipe = `
-			<section style="z-index: ${-n - 1};">${formData.title}</section>
-			<dialog>
-				<button type="button" class="closeModel">Cerrar</button>
-				<h2>${formData.title}</h2>
-				${formData.subtitle ? `<h3 class="sub-title">${formData.subtitle}</h3>` : ''}
-				<ul>
-					<li>
-						<h3>INGREDIENTES:</h3>
-						<ul>
-							<li>${formData.ingredients.replaceAll('\n', '</li> <li>')}</li>
-						</ul>
-					</li>
+	const [img] = $('#photo').files
+	if (img) {
+		const reader = new FileReader()
+		reader.addEventListener('load', () => fetchPUT(reader.result))
+		reader.readAsDataURL(img) //Crear URL
+	} else fetchPUT()
 
-					<li>
-						<h3>PREPARACIÓN:</h3>
-						<ul>
-							<li>${formData.preparation}</li>
-						</ul>
-					</li>
-				</ul>
+	function fetchPUT(url) {
+		//Añadir, eliminar o modificar objs
+		let newForms
+		const { modify: chosen } = formData
 
-				<div class="back" style="background-image: url(${url ?? ''});"></div>
-			</dialog>`
+		//Añadirle category si no tiene
+		if (chosen !== 'remove') {
+			formData.category =
+				formData.category
+				|| prompt('La nueva categoría es:\nPara evitar enviar la receta, pulse "Cancelar"')
 
-			let num, newForms, newRecipes
-			if (formData.change) {
-				//Capturar string
-				const posWord0 = recipes.indexOf(formData.change)
-				const pos0 = recipes.lastIndexOf('<section', posWord0)
-				const endStr = '</dialog>'
-				const posF = recipes.indexOf(endStr, pos0) + endStr.length
-				const strFound = recipes.substring(pos0, posF)
-				const objIdx = lastFormData.findIndex(obj => obj.title === formData.change)
-
-				if (formData.remove) { //Eliminar obj
-					lastFormData.splice(objIdx, 1)
-
-					newRecipes = recipes.replace(strFound, '')
-					num = --n
-				} else { //Editar objeto de lastFormData
-					lastFormData[objIdx] = { ...formData, photo: url }
-
-					newRecipes = recipes.replace(strFound, recipe)
-					num = n
-				}
-				newForms = [...lastFormData]
-			} else {
-				newRecipes = recipes + recipe
-				num = ++n
-				newForms = [
-					...lastFormData,
-					{ ...formData, photo: url }
-				]
-			}
-			fetch('http://localhost:3000/recipe_book', {
-				method: 'PUT',
-				body: JSON.stringify({
-					recipes: newRecipes,
-					count: num,
-					forms: newForms
-				}),
-			})
-				.then(manage)
-				.then(json => console.log(json))
-				.catch(err => console.warn(err))
+			if (!formData.category) location.reload() //Al pulsar "Cancelar"
 		}
 
-		const [img] = $photo.files
-		if (img) {
-			const reader = new FileReader()
-			reader.addEventListener('load', () => fetchPUT(reader.result))
-			reader.readAsDataURL(img) //Crear URL
-		} else fetchPUT()
+		if (chosen) {
+			if (!formData.choose) {
+				//Si al modificar no se especifica receta
+				alert('No se ha especificado receta a la que aplicar el cambio')
+				location.reload()
+			}
 
-	} else alert('2 recetas no puede tener el mismo título')
+			const objIdx = lastFormData.findIndex(obj => obj.title === formData.choose)
+			if (chosen === 'change') {
+				lastFormData[objIdx] = { ...formData, photo: url }
+			} else if (chosen === 'remove') {
+				lastFormData.splice(objIdx, 1)
+			}
+			newForms = [...lastFormData]
+		} else {
+			//Añadir obj
+			if (lastFormData.some(obj => obj.title === formData.title)) {
+				alert('2 recetas no puede tener el mismo título')
+				location.reload()
+			}
+			newForms = [
+				...lastFormData,
+				{ ...formData, photo: url }
+			]
+		}
+
+		//Enviar datos
+		fetch('http://localhost:3000/recipe_book', {
+			method: 'PUT',
+			body: JSON.stringify({ forms: newForms })
+		})
+			.then(manage)
+			.then(json => console.log(json))
+			.catch(err => console.warn(err))
+	}
 })
