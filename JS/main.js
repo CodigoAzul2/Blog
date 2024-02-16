@@ -81,7 +81,7 @@ $search.addEventListener('search', () => {
 			.find(c => c.tagName === 'H2')
 			.textContent === $search.value
 	)
-	found.showModal()
+	found?.showModal()
 })
 
 //============> FORMULARIO <==============
