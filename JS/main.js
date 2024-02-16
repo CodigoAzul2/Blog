@@ -1,7 +1,7 @@
 import { $, $$, manage, Foot } from './module.js'
 customElements.define('re-foot', Foot)
 
-//------------------->Connect
+//============> CONECTAR <==============
 //Redirigir
 $('#home').addEventListener('click', () =>
 	location.reload()
@@ -17,21 +17,6 @@ fetch('http://localhost:3000/recipe_book')
 		const $edit = $('#edit')
 		// $edit.insertAdjacentHTML('beforebegin', json.recipes)
 		$edit.style = `top: ${(json.forms.length - 1) * 19 + 75}px;`
-
-		//Funcionalidad
-		function relate(actuators, patient, action) {
-			const tempArr = []
-
-			actuators.forEach((ref, i) => {
-				const act = patient[i]
-				tempArr.push({ ref, act })
-			})
-			actuators.forEach(ref => {
-				ref.addEventListener('click', event => {
-					tempArr.find(pair => pair.ref === event.target).act[action]()
-				})
-			})
-		}
 
 		json.forms.forEach(obj => {
 			$edit.insertAdjacentHTML(
@@ -67,6 +52,20 @@ fetch('http://localhost:3000/recipe_book')
 			)
 		})
 
+		//Funcionalidad
+		function relate(actuators, patient, action) {
+			const tempArr = []
+
+			actuators.forEach((ref, i) => {
+				const act = patient[i]
+				tempArr.push({ ref, act })
+			})
+			actuators.forEach(ref => {
+				ref.addEventListener('click', event => {
+					tempArr.find(pair => pair.ref === event.target).act[action]()
+				})
+			})
+		}
 		const $$recipes = [...$$('aside > section:not([id])'), $edit]
 		const $$dialogs = $$('dialog')
 		const $$close = $$('button.closeModel')
@@ -75,9 +74,18 @@ fetch('http://localhost:3000/recipe_book')
 	})
 	.catch(err => console.warn(err))
 
-// $recipOpt.addEventListener('search', () => {
-// 	if ($('#searchField').value === (a)) { }
-// })
+//============> BÚSQUEDA <==============
+const $search = $('#search')
+$search.addEventListener('search', () => {
+	if (!$search.value) return
+
+	const found = [...$$('dialog:not(.security)')].find(d =>
+		[...d.children]
+			.find(c => c.tagName === 'H2')
+			.textContent === $search.value
+	)
+	found.showModal()
+})
 
 //============> FORMULARIO <==============
 //'Mostrar contraseñas'
