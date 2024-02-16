@@ -3,7 +3,8 @@ customElements.define('re-foot', Foot)
 
 //============> CONECTAR <==============
 //Redirigir
-$('#home').addEventListener('click', () =>
+const $home = $('#home')
+$home.addEventListener('click', () =>
 	location.reload()
 )
 
@@ -14,13 +15,9 @@ fetch('http://localhost:3000/recipe_book')
 		console.log(json)
 
 		//Insertar recetas
-		const $edit = $('#edit')
-		// $edit.insertAdjacentHTML('beforebegin', json.recipes)
-		$edit.style = `top: ${(json.forms.length - 1) * 19 + 75}px;`
-
 		json.forms.forEach(obj => {
-			$edit.insertAdjacentHTML(
-				'beforebegin',
+			$home.insertAdjacentHTML(
+				'afterend',
 				`<section>${obj.title}</section>
 				<dialog>
 					<button type="button" class="closeModel">Cerrar</button>
@@ -66,7 +63,7 @@ fetch('http://localhost:3000/recipe_book')
 				})
 			})
 		}
-		const $$recipes = [...$$('aside > section:not([id])'), $edit]
+		const $$recipes = [...$$('aside > section:not([id])'), $('#edit')]
 		const $$dialogs = $$('dialog')
 		const $$close = $$('button.closeModel')
 		relate($$recipes, $$dialogs, 'showModal')

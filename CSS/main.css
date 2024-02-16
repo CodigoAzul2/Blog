@@ -147,15 +147,9 @@
 	background-image: url('../Recursos/home.png');
 }
 
-#edit {
-	position: absolute;
-	left: 15px;
-
-	&::before {
-		background-image: url('../Recursos/pencil.png');
-	}
+#edit::before {
+	background-image: url('../Recursos/pencil.png');
 }
-
 /* FIN DE ASIDE COMO TAL */
 
 dialog {
