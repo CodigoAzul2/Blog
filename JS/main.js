@@ -1,11 +1,11 @@
 import { $, $$, manage, Foot } from './module.js'
 customElements.define('re-foot', Foot)
+const load = (path = '../HTML/main.html') => location.assign(path)
 
 //============> CONECTAR <==============
 //Redirigir
-const $home = $('#home')
-$home.addEventListener('click', () =>
-	location.reload()
+$('#home').addEventListener('click', () =>
+	load()
 )
 
 const $recipOpt = $('#recipOpt')
@@ -15,9 +15,10 @@ fetch('http://localhost:3000/recipe_book')
 		console.log(json)
 
 		//Insertar recetas
+		const $edit = $('#edit')
 		json.forms.forEach(obj => {
-			$home.insertAdjacentHTML(
-				'afterend',
+			$edit.insertAdjacentHTML(
+				'beforebegin',
 				`<section>${obj.title}</section>
 				<dialog>
 					<button type="button" class="closeModel">Cerrar</button>
@@ -63,7 +64,7 @@ fetch('http://localhost:3000/recipe_book')
 				})
 			})
 		}
-		const $$recipes = [...$$('aside > section:not([id])'), $('#edit')]
+		const $$recipes = [...$$('aside > section:not([id])'), $edit]
 		const $$dialogs = $$('dialog')
 		const $$close = $$('button.closeModel')
 		relate($$recipes, $$dialogs, 'showModal')
@@ -73,7 +74,7 @@ fetch('http://localhost:3000/recipe_book')
 
 //============> BÚSQUEDA <==============
 const $search = $('#search')
-$search.addEventListener('search', () => {
+$search.addEventListener('change', () => {
 	if (!$search.value) return
 
 	const found = [...$$('dialog:not(.security)')].find(d =>
@@ -124,9 +125,9 @@ $('form').addEventListener('submit', event => {
 					})
 						.then(manage)
 						.then(json => console.log(json))
-					location.reload()
-				} else location.assign('../HTML/edit.html')
-			} else location.reload()
+					load()
+				} else load('../HTML/edit.html')
+			} else load()
 		})
 		.catch(error => console.warn(error))
 })

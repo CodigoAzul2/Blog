@@ -1,14 +1,16 @@
-/* ASIDE */
 .background {
 	transition: margin 0.5s;
 	margin: 50px 0 0 160px;
-
+	
 	&:has(#hidden:checked) {
 		margin: 50px 0 0 30px;
 	}
 }
 
+/* ASIDE */
 .aside {
+	scrollbar-color: #79978e transparent;
+	overflow-x: hidden;
 	position: fixed;
 	top: 0px;
 	left: 0px;
@@ -246,5 +248,5 @@ dialog {
 }
 
 #search {
-	width: 30%;
+	min-width: 30%;
 }

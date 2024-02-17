@@ -1,3 +1,7 @@
+* {
+	scrollbar-width: thin;
+}
+
 .background {
 	margin: 0;
 	font-family: Cambria, Georgia, Times;

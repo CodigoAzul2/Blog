@@ -60,6 +60,7 @@ form {
 	input,
 	textarea {
 		font-family: Arial;
+		font-size: small;
 
 		&:focus {
 			background-color: lightyellow;
