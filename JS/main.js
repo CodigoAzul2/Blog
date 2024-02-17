@@ -127,7 +127,10 @@ $('form').addEventListener('submit', event => {
 						.then(json => console.log(json))
 					load()
 				} else load('../HTML/edit.html')
-			} else load()
+			} else {
+				alert('Incorrecto. ¡Inténtalo de nuevo!')
+				load()
+			}
 		})
 		.catch(error => console.warn(error))
 })

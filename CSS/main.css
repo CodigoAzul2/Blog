@@ -249,4 +249,8 @@ dialog {
 
 #search {
 	min-width: 30%;
+
+	&:focus {
+		background-color: lightyellow;
+	}
 }
