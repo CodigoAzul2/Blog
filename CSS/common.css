@@ -1,19 +1,52 @@
+:root {
+	--cColor: #3f678b;
+	--cLink: #3f678b70;
+	--cMain: #ffffffe6;
+	--cAside1: #fdbd08;
+	--cAside2: #fca85b;
+	--cFoot1: #f85466e6;
+	--cFoot2: #d11c00e6;
+
+	--cBlack: black;
+	--cWhite: white;
+	--cFocus: lightyellow;
+
+	--cShade1: lightgreen;
+	--cShade2: lightsalmon;
+	--cShadeSec1: lightblue;
+	--cShadeSec2: lightcoral;
+
+	--cSub: lightseagreen;
+	--cModify: #fff2c9e6;
+	--cRemove: #ffcfcfe6;
+	--cSmooth: #ffffff8e;
+	--cFormBorder: gray;
+
+	--wAside: 130px;
+}
+
 * {
 	scrollbar-width: thin;
+}
+
+html {
+	position: absolute;
+	inset: 0;
 }
 
 .background {
 	margin: 0;
 	font-family: Cambria, Georgia, Times;
 	background-image: url(../Recursos/back_img.jpg);
-	background-size: 350px;
+	background-size: cover;
+	background-position: center;
 }
 
 .main {
 	margin: 10px;
 	padding-block: 20px;
 	border-radius: 30px;
-	background-color: #ffffffe6;
+	background-color: var(--cMain);
 	display: flex;
 	flex-direction: column;
 	align-items: center;
@@ -21,10 +54,11 @@
 }
 
 .title {
+	color: var(--cMain);
 	margin: 0px;
 	padding: 5px 50px;
 	border-radius: 40px;
-	background-color: #f2e3c2;
+	background-color: var(--cColor);
 	font-size: 2.2em;
 	text-decoration: underline;
 }
@@ -34,7 +68,8 @@ re-foot {
 	margin: 10px;
 	padding: 10px;
 	border-radius: 30px;
-	background-color: #e3c2f2e6;
+	background-color: var(--cFoot);
+	background-image: linear-gradient(to right, var(--cFoot1), 75%, var(--cFoot2));
 
 	>* {
 		margin: 0px 0px 0px 50px;

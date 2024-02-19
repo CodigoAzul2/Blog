@@ -1,30 +1,13 @@
 .background {
 	transition: margin 0.5s;
-	margin: 50px 0 0 160px;
-	
+	margin: 50px 0 0 calc(var(--wAside) + 30px);
+
 	&:has(#hidden:checked) {
 		margin: 50px 0 0 30px;
 	}
 }
 
 /* ASIDE */
-.aside {
-	scrollbar-color: #79978e transparent;
-	overflow-x: hidden;
-	position: fixed;
-	top: 0px;
-	left: 0px;
-	padding: 5px 15px;
-	background-image: linear-gradient(#79978e, #c2f2e3 1%);
-	height: 100%;
-	width: 130px;
-	transition: all 0.5s;
-
-	&:has(#hidden:checked) {
-		left: -160px;
-	}
-}
-
 #hidden {
 	display: none;
 }
@@ -33,17 +16,19 @@
 	width: 30px;
 	aspect-ratio: 1/1;
 	position: absolute;
-	left: 160px;
+	top: 5px;
+	left: calc(var(--wAside) + 30px);
 	padding: 5px;
 	border-radius: 0 8px 8px 0;
-	background-color: #c2f2e3;
+	background-color: var(--cAside);
 	display: flex;
 	flex-direction: column;
 	justify-content: space-evenly;
 	align-items: center;
+	transition: left 0.5s;
 
 	div {
-		background-color: black;
+		background-color: var(--cBlack);
 		height: 2px;
 		width: 100%;
 		border-radius: 10px;
@@ -83,6 +68,27 @@
 	}
 }
 
+.aside {
+	scrollbar-color: var(--cSmooth) transparent;
+	overflow-x: hidden;
+	position: fixed;
+	top: 0px;
+	left: 0px;
+	padding: 5px 15px;
+	background-color: var(--cAside);
+	background-image: linear-gradient(var(--cAside1), 1%, var(--cAside2));
+	height: 100%;
+	width: var(--wAside);
+	transition: left 0.5s;
+}
+
+#hidden:checked+label {
+	left: 0;
+}
+
+#hidden:checked~.aside {
+	left: calc(-1 * var(--wAside) - 30px);
+}
 
 #headerMenu {
 	width: max-content;
@@ -129,7 +135,7 @@
 	&::after {
 		content: '';
 		display: block;
-		background-color: black;
+		background-color: var(--cBlack);
 		height: 1px;
 		width: 0%;
 		margin: auto;
@@ -152,6 +158,7 @@
 #edit::before {
 	background-image: url('../Recursos/pencil.png');
 }
+
 /* FIN DE ASIDE COMO TAL */
 
 dialog {
@@ -164,9 +171,9 @@ dialog {
 		width: 80%;
 		overflow-wrap: break-word;
 		box-shadow:
-			-10px -10px lightgreen,
-			10px 10px lightsalmon,
-			0 0 50px black;
+			-10px -10px var(--cShade1),
+			10px 10px var(--cShade2),
+			0 0 50px var(--cBlack);
 
 		h2 {
 			text-align: center;
@@ -175,12 +182,11 @@ dialog {
 		}
 
 		.sub-title {
-			--c: white;
 			font-style: italic;
 			font-weight: bolder;
 			font-size: small;
-			color: lightseagreen;
-			filter: drop-shadow(0 0 1px var(--c)) drop-shadow(0 0 1px var(--c)) drop-shadow(0 0 1px var(--c)) drop-shadow(0 0 1px var(--c)) drop-shadow(0 0 1px var(--c)) drop-shadow(0 0 1px var(--c));
+			color: var(--cSub);
+			filter: drop-shadow(0 0 1px var(--cWhite)) drop-shadow(0 0 1px var(--cWhite)) drop-shadow(0 0 1px var(--cWhite)) drop-shadow(0 0 1px var(--cWhite)) drop-shadow(0 0 1px var(--cWhite)) drop-shadow(0 0 1px var(--cWhite));
 			text-align: center;
 		}
 
@@ -206,9 +212,9 @@ dialog {
 	&.security {
 		width: 300px;
 		box-shadow:
-			-10px -10px lightblue,
-			10px 10px lightcoral,
-			0 0 50px black;
+			-10px -10px var(--cShadeSec1),
+			10px 10px var(--cShadeSec2),
+			0 0 50px var(--cBlack);
 	}
 }
 
@@ -248,9 +254,12 @@ dialog {
 }
 
 #search {
+	background-color: var(--cSmooth);
+	border: 1px solid var(--cFormBorder);
+	border-radius: 2px;
 	min-width: 30%;
 
 	&:focus {
-		background-color: lightyellow;
+		background-color: var(--cFocus);
 	}
 }

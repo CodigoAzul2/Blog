@@ -83,6 +83,7 @@ $search.addEventListener('change', () => {
 			.textContent === $search.value
 	)
 	found?.showModal()
+	$search.value = ''
 })
 
 //============> FORMULARIO <==============

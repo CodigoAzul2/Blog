@@ -1,9 +1,14 @@
+.main {
+	padding-top: 10px;
+	gap: 10px;
+}
+
 .modifying {
-	background-color: #fff2c9e6;
+	background-color: var(--cModify);
 }
 
 .removing {
-	background-color: #ffcfcfe6;
+	background-color: var(--cRemove);
 }
 
 .header {
@@ -16,15 +21,15 @@
 
 .link {
 	display: flex;
-	color: black;
-	background-color: #ffffff8e;
+	color: var(--cBlack);
+	background-color: var(--cLink);
 	font-size: large;
 	font-weight: bold;
 	text-decoration: none;
 	border-radius: 25px;
 	padding-right: 5px;
-	border: solid #f2e3c2 5px;
-	box-shadow: 0 0 10px 2px #ffffff8e;
+	border: solid var(--cColor) 5px;
+	box-shadow: 0 0 10px 2px var(--cLink);
 	transition: all 0.15s;
 
 	&::before {
@@ -49,7 +54,7 @@ form {
 	min-width: min-content;
 
 	> :not(:last-child) {
-		border-bottom: gray 1px dotted;
+		border-bottom: var(--cFormBorder) 1px dotted;
 		padding-bottom: 5px;
 	}
 
@@ -63,15 +68,15 @@ form {
 		font-size: small;
 
 		&:focus {
-			background-color: lightyellow;
+			background-color: var(--cFocus);
 		}
 	}
 
 	input,
 	textarea,
 	select {
-		background-color: #ffffff8e;
-		border: 1px solid gray;
+		background-color: var(--cSmooth);
+		border: 1px solid var(--cFormBorder);
 		border-radius: 2px;
 	}
 
@@ -79,19 +84,27 @@ form {
 		flex-direction: column;
 		gap: 15px;
 
-		article {
+		/* #copy {
+			display: none;
+		} */
+
+		> :not(#copy) {
 			width: 100%;
 			display: flex;
 			justify-content: space-between;
 			align-items: center;
-		}
 
-		article:not(:has(:checked))~.choose {
-			display: none;
-		}
+			&:not(:has(:checked))~.choose {
+				display: none;
+			}
 
-		article:has(:checked)~.choose {
-			display: flex;
+			&:has(:checked)~.choose {
+				display: flex;
+			}
+
+			&:has(#change:checked)~#copy {
+				display: block;
+			}
 		}
 	}
 

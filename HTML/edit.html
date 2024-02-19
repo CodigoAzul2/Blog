@@ -21,6 +21,27 @@
 		</header>
 
 		<form>
+			<section class="modify">
+				<article>
+					<label for="change">Modificar:</label>
+					<input type="radio" name="modify" id="change" value="change">
+				</article>
+
+				<article>
+					<label for="remove">Eliminar:</label>
+					<input type="radio" name="modify" id="remove" value="remove">
+				</article>
+
+				<article class="choose">
+					<label for="choose">Elegir:</label>
+					<select name="choose" id="choose">
+						<option></option>
+					</select>
+				</article>
+
+				<!-- <button type="button" id="copy">Copiar receta actual</button> -->
+			</section>
+
 			<section>
 				<label for="title">*Título:</label>
 				<input type="text" name="title" id="title" maxlength="15" required />
@@ -51,25 +72,6 @@
 			<section>
 				<label for="preparation">Preparación:</label>
 				<textarea name="preparation" id="preparation" cols="50" rows="5"></textarea>
-			</section>
-
-			<section class="modify">
-				<article>
-					<label for="change">Modificar:</label>
-					<input type="radio" name="modify" id="change" value="change">
-				</article>
-
-				<article>
-					<label for="remove">Eliminar:</label>
-					<input type="radio" name="modify" id="remove" value="remove">
-				</article>
-
-				<article class="choose">
-					<label for="choose">Elegir:</label>
-					<select name="choose" id="choose">
-						<option></option>
-					</select>
-				</article>
 			</section>
 
 			<nav>

@@ -4,6 +4,7 @@ const load = (path = '../HTML/edit.html') => location.assign(path)
 
 //============> MODIFY <==============
 $('#erase').addEventListener('click', () => load())
+// $('#copy').addEventListener('click', )
 
 $$('input[name="modify"]').forEach(inp => {
 	inp.addEventListener('change', () => {

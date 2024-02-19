@@ -16,12 +16,13 @@
         "choose": "Ola"
       },
       {
-        "title": "COCIDO",
-        "subtitle": "MADRILEÑÑÑÑÑÑÑo",
-        "photo": "data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz4KPHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIGlkPSJCb2xkIiB2aWV3Qm94PSIwIDAgMjQgMjQiIHdpZHRoPSI1MTIiIGhlaWdodD0iNTEyIj48cGF0aCBkPSJNMS41MSw2LjA3OWExLjQ5MiwxLjQ5MiwwLDAsMSwxLjA2LjQ0bDcuNjczLDcuNjcyYTIuNSwyLjUsMCwwLDAsMy41MzYsMEwyMS40NCw2LjUyOUExLjUsMS41LDAsMSwxLDIzLjU2MSw4LjY1TDE1LjksMTYuMzEyYTUuNTA1LDUuNTA1LDAsMCwxLTcuNzc4LDBMLjQ0OSw4LjY0QTEuNSwxLjUsMCwwLDEsMS41MSw2LjA3OVoiLz48L3N2Zz4K",
-        "ingredients": "Lleva tal, tal y tal",
-        "preparation": "Hay que hacer esto, esto y aquello",
-        "change": "Cocido"
+        "modify": "change",
+        "choose": "COCIDO",
+        "title": "cocido",
+        "subtitle": "",
+        "category": null,
+        "ingredients": "Lleva tal, tal y tal\nGarbanzos",
+        "preparation": ""
       },
       {
         "title": "Pollo",
