@@ -10,6 +10,7 @@ $$('input[name="modify"]').forEach(inp => {
 	inp.addEventListener('change', () => {
 		const removing = $('#remove').checked
 		$('#title').toggleAttribute('required', !removing)
+		$('#choose').toggleAttribute('required', !removing)
 
 		$('.main').classList.toggle('modifying', !removing)
 		$('.main').classList.toggle('removing', removing)
@@ -28,9 +29,19 @@ fetch('http://localhost:3000/recipe_book')
 	.then(data => {
 		console.log(data)
 		lastFormData = data.forms
+		const $choose = $('#choose')
+
+		$('#copy').addEventListener('click', () => {
+			const chosen = data.forms.find(obj => obj.title === $choose.value)
+			const allow = ['title', 'subtitle', 'category', 'ingredients', 'preparation']
+			allow.forEach(a => {
+				$(`#${a}`).value = chosen[a] ?? ''
+			})
+			alert('Al copiar la receta actual, no se puede copiar la imagen si fue anteriormente enviada. En ese caso, deberá volver a adjuntarla en el formulario.')
+		})
 
 		data.forms.forEach(obj => {
-			$('#choose').insertAdjacentHTML(
+			$choose.insertAdjacentHTML(
 				'beforeend',
 				`<option>${obj.title}</option>`
 			)
@@ -40,7 +51,7 @@ fetch('http://localhost:3000/recipe_book')
 		catArr
 			.filter((el, i) => catArr.indexOf(el) === i)
 			.forEach(cat => {
-				$('#category').insertAdjacentHTML(
+				$('#catList').insertAdjacentHTML(
 					'beforeend',
 					`<option>${cat}</option>`
 				)
@@ -61,32 +72,16 @@ $('form').addEventListener('submit', event => {
 	} else fetchPUT()
 
 	function fetchPUT(url) {
-		//Añadir, eliminar o modificar objs
 		let newForms
-		const { modify: chosen } = formData
+		const { modify: choice } = formData
 
-		//Añadirle category si no tiene
-		if (chosen !== 'remove') {
-			formData.category =
-				formData.category
-				|| prompt('La nueva categoría es:\nPara evitar enviar la receta, pulse "Cancelar"')
-			if (!formData.category) load()
-		}
-
-		if (chosen) {
-			if (!formData.choose) {
-				//Si al modificar no se especifica receta
-				alert('No se ha especificado receta a la que aplicar el cambio')
-				load()
-			}
-
+		if (choice) {
 			const objIdx = lastFormData.findIndex(obj => obj.title === formData.choose)
-			if (chosen === 'change') lastFormData[objIdx] = { ...formData, photo: url }
-			else if (chosen === 'remove') lastFormData.splice(objIdx, 1)
+			if (choice === 'change') lastFormData[objIdx] = { ...formData, photo: url ?? null }
+			else if (choice === 'remove') lastFormData.splice(objIdx, 1)
 
 			newForms = [...lastFormData] //Actualizar
-		} else {
-			//Añadir obj
+		} else { //Añadir obj
 			if (lastFormData.some(obj => obj.title === formData.title)) {
 				alert('2 recetas no puede tener el mismo título')
 				load()
@@ -94,7 +89,12 @@ $('form').addEventListener('submit', event => {
 			}
 			newForms = [
 				...lastFormData,
-				{ ...formData, photo: url }
+				{
+					...formData,
+					photo: url ?? null,
+					choose: null,
+					modify: null,
+				}
 			]
 		}
 

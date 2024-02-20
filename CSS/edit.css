@@ -84,9 +84,9 @@ form {
 		flex-direction: column;
 		gap: 15px;
 
-		/* #copy {
+		#copy {
 			display: none;
-		} */
+		}
 
 		> :not(#copy) {
 			width: 100%;
