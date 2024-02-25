@@ -4,9 +4,7 @@ const load = (path = '../HTML/main.html') => location.assign(path)
 
 //============> CONECTAR <==============
 //Redirigir
-$('#home').addEventListener('click', () =>
-	load()
-)
+$('#home').addEventListener('click', () => load())
 
 const $recipOpt = $('#recipOpt')
 fetch('http://localhost:3000/recipe_book')
@@ -17,6 +15,13 @@ fetch('http://localhost:3000/recipe_book')
 		//Insertar recetas
 		const $edit = $('#edit')
 		json.forms.forEach(obj => {
+			const makeUl = text => text
+				.replace(/^[^>].*$/gm, '<li>$&</li>')
+				.replace(/^>.*$/gm, s => {
+					const count = s.match(/^>+/)[0].length
+					return `${'<ul>'.repeat(count)}<li>${s.substring(count)}</li>${'</ul>'.repeat(count)}`
+				})
+
 			$edit.insertAdjacentHTML(
 				'beforebegin',
 				`<section>${obj.title}</section>
@@ -27,16 +32,11 @@ fetch('http://localhost:3000/recipe_book')
 					<ul>
 						<li>
 							<h3>INGREDIENTES:</h3>
-							<ul>
-								<li>${obj.ingredients.replaceAll('\n', '</li> <li>')}</li>
-							</ul>
+							<ul>${makeUl(obj.ingredients)}</ul>
 						</li>
-
 						<li>
 							<h3>PREPARACIÓN:</h3>
-							<ul>
-								<li>${obj.preparation.replaceAll('\n', '</li> <li>')}</li>
-							</ul>
+							<ul>${makeUl(obj.preparation)}</ul>
 						</li>
 					</ul>
 
@@ -51,16 +51,17 @@ fetch('http://localhost:3000/recipe_book')
 		})
 
 		//Funcionalidad
-		function relate(actuators, patient, action) {
-			const tempArr = []
-
-			actuators.forEach((ref, i) => {
-				const act = patient[i]
-				tempArr.push({ ref, act })
-			})
-			actuators.forEach(ref => {
-				ref.addEventListener('click', event => {
-					tempArr.find(pair => pair.ref === event.target).act[action]()
+		function relate(actuators, waiters, action) {
+			const tempArr = [...actuators].reduce((prev, curr, i) => {
+				prev.push({ act: curr, dlg: waiters[i] })
+				return prev
+			}, [])
+			
+			actuators.forEach(act => {
+				act.addEventListener('click', event => {
+					const dlgOpen = tempArr.find(pair => pair.act === event.target).dlg
+					dlgOpen[action]()
+					dlgOpen.lastElementChild.style.height = `${dlgOpen.scrollHeight}px`
 				})
 			})
 		}
@@ -77,12 +78,13 @@ const $search = $('#search')
 $search.addEventListener('change', () => {
 	if (!$search.value) return
 
-	const found = [...$$('dialog:not(.security)')].find(d =>
-		[...d.children]
+	const dlgFound = [...$$('dialog:not(.security)')]
+		.find(d => [...d.children]
 			.find(c => c.tagName === 'H2')
 			.textContent === $search.value
-	)
-	found?.showModal()
+		)
+	dlgFound?.showModal()
+	dlgFound.lastElementChild.style.height = `${dlgFound.scrollHeight}px`
 	$search.value = ''
 })
 
@@ -94,7 +96,7 @@ $('#showPass').addEventListener('change', () => {
 	$newPass.type = ($newPass.type === 'password') ? 'text' : 'password'
 })
 //'Cambiar contraseña'
-const $oldUser = $('#user'), $newUser = $('#newUser')
+const $newUser = $('#newUser')
 $('#changeAccount').addEventListener('change', () => {
 	$newPass.toggleAttribute('required')
 	$newUser.toggleAttribute('required')

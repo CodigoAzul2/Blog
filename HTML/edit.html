@@ -42,7 +42,7 @@
 
 			<section>
 				<label for="title">*Título:</label>
-				<input type="text" name="title" id="title" maxlength="15" required />
+				<input type="text" name="title" id="title" maxlength="30" required />
 			</section>
 
 			<section>
@@ -52,13 +52,18 @@
 
 			<section>
 				<label for="category">Categoría:</label>
-				<input type="text" name="category" id="category" list="catList">
+				<input type="text" name="category" id="category" list="catList" autocomplete="off">
 				<datalist id="catList"></datalist>
 			</section>
 
 			<section>
 				<label for="photo">Fotografía:</label>
 				<input type="file" accept="image/*" name="photo" id="photo">
+			</section>
+
+			<section>
+				<p>Por cada 'Intro', se crea otro item.</p>
+				<p>Por cada '>', se anida el item un nivel más.</p>
 			</section>
 
 			<section>

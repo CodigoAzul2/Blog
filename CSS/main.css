@@ -20,7 +20,7 @@
 	left: calc(var(--wAside) + 30px);
 	padding: 5px;
 	border-radius: 0 8px 8px 0;
-	background-color: var(--cAside);
+	background-image: linear-gradient(var(--cAside1) -5px, 1%, var(--cAside2) 100vh);
 	display: flex;
 	flex-direction: column;
 	justify-content: space-evenly;
@@ -169,6 +169,8 @@ dialog {
 
 	&:not(.security) {
 		width: 80%;
+		max-height: calc(100% - 70px);
+		scrollbar-width: none;
 		overflow-wrap: break-word;
 		box-shadow:
 			-10px -10px var(--cShade1),
@@ -176,6 +178,7 @@ dialog {
 			0 0 50px var(--cBlack);
 
 		h2 {
+			margin-top: 0;
 			text-align: center;
 			text-transform: uppercase;
 			text-decoration: underline;
@@ -192,10 +195,6 @@ dialog {
 
 		h3 {
 			margin-bottom: 5px;
-		}
-
-		li:empty {
-			display: none;
 		}
 
 		.back {

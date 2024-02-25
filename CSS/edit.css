@@ -1,6 +1,6 @@
 .main {
 	padding-top: 10px;
-	gap: 10px;
+	gap: 0px;
 }
 
 .modifying {
@@ -106,6 +106,15 @@ form {
 				display: block;
 			}
 		}
+	}
+
+	section:has(p) {
+		justify-content: space-evenly;
+	}
+
+	p {
+		font-style: italic;
+		margin: 0;
 	}
 
 	button {
