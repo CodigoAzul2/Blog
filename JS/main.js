@@ -84,7 +84,7 @@ $search.addEventListener('change', () => {
 			.textContent === $search.value
 		)
 	dlgFound?.showModal()
-	dlgFound.lastElementChild.style.height = `${dlgFound.scrollHeight}px`
+	dlgFound && (dlgFound.lastElementChild.style.height = `${dlgFound.scrollHeight}px`)
 	$search.value = ''
 })
 
