@@ -1,10 +1,25 @@
+:root {
+	--wAside: 250px;
+}
+
 .background {
 	transition: margin 0.5s;
-	margin: 50px 0 0 calc(var(--wAside) + 30px);
+	margin: 50px 0 0 var(--wAside);
 
 	&:has(#hidden:checked) {
-		margin: 50px 0 0 30px;
+		margin: 50px 0 0 0;
 	}
+}
+
+.title {
+	text-align: center;
+	color: var(--cMain);
+	margin: 10px;
+	padding: 5px 20%;
+	border-radius: 40px;
+	background-color: var(--cColor);
+	font-size: 2.2em;
+	text-decoration: underline;
 }
 
 /* ASIDE */
@@ -12,12 +27,14 @@
 	display: none;
 }
 
-#hidden+label {
-	width: 30px;
+#hidden + label {
+	z-index: 1;
+	box-sizing: border-box;
+	width: 40px;
 	aspect-ratio: 1/1;
 	position: absolute;
 	top: 5px;
-	left: calc(var(--wAside) + 30px);
+	left: var(--wAside);
 	padding: 5px;
 	border-radius: 0 8px 8px 0;
 	background-image: linear-gradient(var(--cAside1) -5px, 1%, var(--cAside2) 100vh);
@@ -52,7 +69,7 @@
 	}
 }
 
-#hidden:checked+label:hover div {
+#hidden:checked + label:hover div {
 	&:first-child {
 		width: 50%;
 		transform: rotate(45deg) translate(2.5px, 2px);
@@ -70,24 +87,25 @@
 
 .aside {
 	scrollbar-color: var(--cSmooth) transparent;
-	overflow-x: hidden;
+	overflow: auto;
 	position: fixed;
-	top: 0px;
-	left: 0px;
+	top: 0;
+	left: 0;
 	padding: 5px 15px;
 	background-color: var(--cAside);
 	background-image: linear-gradient(var(--cAside1), 1%, var(--cAside2));
 	height: 100%;
+	box-sizing: border-box;
 	width: var(--wAside);
 	transition: left 0.5s;
 }
 
-#hidden:checked+label {
+#hidden:checked + label {
 	left: 0;
 }
 
-#hidden:checked~.aside {
-	left: calc(-1 * var(--wAside) - 30px);
+#hidden:checked ~ .aside {
+	left: calc(-1 * var(--wAside));
 }
 
 #headerMenu {
@@ -99,7 +117,7 @@
 	transition: all 0.15s;
 }
 
-#headerMenu~section {
+#headerMenu ~ section {
 	width: max-content;
 	transition: all 0.15s;
 	cursor: pointer;
@@ -118,8 +136,7 @@
 	}
 }
 
-#home,
-#edit {
+#home, #edit {
 	margin-block: 5px;
 
 	&::before {
@@ -160,7 +177,6 @@
 }
 
 /* FIN DE ASIDE COMO TAL */
-
 dialog {
 	border: none;
 	border-radius: 5px;
@@ -168,14 +184,15 @@ dialog {
 	animation: bounce 0.7s ease-in-out 0.2s forwards;
 
 	&:not(.security) {
-		width: 80%;
-		max-height: calc(100% - 70px);
+		box-sizing: border-box;
+		width: 90%;
+		max-height: calc(100% - 8vmin);
 		scrollbar-width: none;
 		overflow-wrap: break-word;
 		box-shadow:
-			-10px -10px var(--cShade1),
-			10px 10px var(--cShade2),
-			0 0 50px var(--cBlack);
+			-2vmin -2vmin var(--cShade1),
+			2vmin 2vmin var(--cShade2),
+			0 0 10vmin var(--cBlack);
 
 		h2 {
 			margin-top: 0;
@@ -185,6 +202,7 @@ dialog {
 		}
 
 		.sub-title {
+			margin-bottom: 20px;
 			font-style: italic;
 			font-weight: bolder;
 			font-size: small;
@@ -193,27 +211,34 @@ dialog {
 			text-align: center;
 		}
 
+		img {
+			margin: auto;
+			max-width: 25%;
+			max-height: 25%;
+		}
+
 		h3 {
 			margin-bottom: 5px;
 		}
 
-		.back {
-			z-index: -1;
-			position: absolute;
-			inset: 0;
-			background-size: contain;
-			background-position: center;
-			background-repeat: no-repeat;
-			filter: blur(1px) opacity(40%) saturate(70%);
+		.foot-page {
+			text-align: end;
+			font-style: italic;
+			margin-bottom: 0;
+
+			span {
+				text-decoration: underline;
+			}
 		}
 	}
 
 	&.security {
+		box-sizing: border-box;
 		width: 300px;
 		box-shadow:
-			-10px -10px var(--cShadeSec1),
-			10px 10px var(--cShadeSec2),
-			0 0 50px var(--cBlack);
+			-2vmin -2vmin var(--cShadeSec1),
+			2vmin 2vmin var(--cShadeSec2),
+			0 0 10vmin var(--cBlack);
 	}
 }
 
@@ -236,15 +261,15 @@ dialog {
 	}
 }
 
-#ref+article {
+#ref + article {
 	display: none;
 }
 
-#ref:has(:checked)+article {
+#ref:has(:checked) + article {
 	display: block;
 	flex-direction: column;
 
-	>* {
+	> * {
 		width: 100%;
 		margin-block: 5px;
 		display: flex;
@@ -260,5 +285,43 @@ dialog {
 
 	&:focus {
 		background-color: var(--cFocus);
+	}
+}
+
+@media (width < 480px) {
+	.background {
+		margin: 50px 0 0 0;
+	}
+
+	.main {
+		padding-top: 0;
+	}
+
+	.aside {
+		box-sizing: border-box;
+		width: 100%;
+		left: 0;
+	}
+
+	#hidden + label {
+		left: calc(100% - 40px);
+	}
+
+	#hidden:checked + label {
+		left: 0;
+	}
+
+	#hidden:checked ~ .aside {
+		left: -100%;
+	}
+
+	dialog:not(.security) {
+		margin: auto;
+		max-height: calc(100% - 4vh);
+		width: 100%;
+
+		ul {
+			padding-left: 20px;
+		}
 	}
 }

@@ -29,6 +29,7 @@ fetch('http://localhost:3000/recipe_book')
 					<button type="button" class="closeModel">Cerrar</button>
 					<h2>${obj.title}</h2>
 					${obj.subtitle ? `<h3 class="sub-title">${obj.subtitle}</h3>` : ''}
+					<img src="${obj.photo ?? ''}" style="display: ${obj.photo ? 'block': 'none'};" />
 					<ul>
 						<li>
 							<h3>INGREDIENTES:</h3>
@@ -39,8 +40,7 @@ fetch('http://localhost:3000/recipe_book')
 							<ul>${makeUl(obj.preparation)}</ul>
 						</li>
 					</ul>
-
-					<div class="back" style="background-image: url(${obj.photo ?? ''});"></div>
+					<p class="foot-page"><span>Monitora:</span> Reyes García Delgado</p>
 				</dialog>`
 			)
 
@@ -58,10 +58,8 @@ fetch('http://localhost:3000/recipe_book')
 			}, [])
 			
 			actuators.forEach(act => {
-				act.addEventListener('click', event => {
-					const dlgOpen = tempArr.find(pair => pair.act === event.target).dlg
-					dlgOpen[action]()
-					dlgOpen.lastElementChild.style.height = `${dlgOpen.scrollHeight}px`
+				act.addEventListener('click', e => {
+					tempArr.find(pair => pair.act === e.target).dlg[action]()
 				})
 			})
 		}
@@ -84,7 +82,6 @@ $search.addEventListener('change', () => {
 			.textContent === $search.value
 		)
 	dlgFound?.showModal()
-	dlgFound && (dlgFound.lastElementChild.style.height = `${dlgFound.scrollHeight}px`)
 	$search.value = ''
 })
 
