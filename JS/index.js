@@ -1,7 +1,9 @@
 import { $, $$, manage, Foot } from './module.js'
 customElements.define('re-foot', Foot)
-const load = (path = '../HTML/main.html') => location.assign(path)
-
+const load = path => {
+	if (!path) location.assign('./index.html')
+	else open(path, '_blank') ?? location.assign(path)
+}
 //============> CONECTAR <==============
 //Redirigir
 $('#home').addEventListener('click', () => load())
@@ -126,7 +128,7 @@ $('form').addEventListener('submit', event => {
 						.then(manage)
 						.then(json => console.log(json))
 					load()
-				} else load('../HTML/edit.html')
+				} else load('./edit.html')
 			} else {
 				alert('Incorrecto. ¡Inténtalo de nuevo!')
 				load()

@@ -1,10 +1,13 @@
 import { $, $$, manage, Foot } from './module.js'
 customElements.define('re-foot', Foot)
-const load = (path = '../HTML/edit.html') => location.assign(path)
+const load = path => {
+	if (!path) location.assign('./edit.html')
+	else open(path, '_blank') ?? location.assign(path)
+}
 
 //============> MODIFY <==============
 $('#erase').addEventListener('click', () => load())
-// $('#copy').addEventListener('click', )
+$('.link').addEventListener('click', () => load('./index.html'))
 
 $$('input[name="modify"]').forEach(inp => {
 	inp.addEventListener('change', () => {
