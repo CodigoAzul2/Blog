@@ -1,13 +1,13 @@
-import { $, $$, manage, Foot } from './module.js'
+import { $, $$, manage, Foot, PATH } from './module.js'
 customElements.define('re-foot', Foot)
 const load = path => {
-	if (!path) location.assign('./edit.html')
+	if (!path) location.assign(PATH.edit)
 	else open(path, '_blank') ?? location.assign(path)
 }
 
 //============> MODIFY <==============
 $('#erase').addEventListener('click', () => load())
-$('.link').addEventListener('click', () => load('./index.html'))
+$('.link').addEventListener('click', () => load(PATH.index))
 
 $$('input[name="modify"]').forEach(inp => {
 	inp.addEventListener('change', () => {
@@ -73,6 +73,7 @@ $('form').addEventListener('submit', event => {
 		reader.addEventListener('load', () => fetchPUT(reader.result))
 		reader.readAsDataURL(img) //Crear URL
 	} else fetchPUT()
+	load()
 
 	function fetchPUT(url) {
 		let newForms

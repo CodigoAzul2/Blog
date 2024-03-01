@@ -1,7 +1,7 @@
-import { $, $$, manage, Foot } from './module.js'
+import { $, $$, manage, Foot, PATH } from './module.js'
 customElements.define('re-foot', Foot)
 const load = path => {
-	if (!path) location.assign('./index.html')
+	if (!path) location.assign(PATH.index)
 	else open(path, '_blank') ?? location.assign(path)
 }
 //============> CONECTAR <==============
@@ -70,6 +70,8 @@ fetch('http://localhost:3000/recipe_book')
 		const $$close = $$('button.closeModel')
 		relate($$recipes, $$dialogs, 'showModal')
 		relate($$close, $$dialogs, 'close')
+
+		$('.preloader').style.display = 'none'
 	})
 	.catch(err => console.warn(err))
 
@@ -128,7 +130,7 @@ $('form').addEventListener('submit', event => {
 						.then(manage)
 						.then(json => console.log(json))
 					load()
-				} else load('./edit.html')
+				} else load(PATH.edit)
 			} else {
 				alert('Incorrecto. ¡Inténtalo de nuevo!')
 				load()
