@@ -27,15 +27,16 @@ $$('input[name="modify"]').forEach(inp => {
 //============> RECETAS <==============
 let lastFormData
 const catArr = []
-fetch('http://localhost:3000/recipe_book')
+fetch(PATH.keep)
 	.then(manage)
 	.then(data => {
+		data = data.recipe_book
 		console.log(data)
-		lastFormData = data.forms
+		lastFormData = data
 		const $choose = $('#choose')
 
 		$('#copy').addEventListener('click', () => {
-			const chosen = data.forms.find(obj => obj.title === $choose.value)
+			const chosen = data.find(obj => obj.title === $choose.value)
 			const allow = ['title', 'subtitle', 'category', 'ingredients', 'preparation']
 			allow.forEach(a => {
 				$(`#${a}`).value = chosen[a] ?? ''
@@ -43,7 +44,7 @@ fetch('http://localhost:3000/recipe_book')
 			alert('Al copiar la receta actual, no se puede copiar la imagen si fue anteriormente enviada. En ese caso, deberá volver a adjuntarla en el formulario.')
 		})
 
-		data.forms.forEach(obj => {
+		data.forEach(obj => {
 			$choose.insertAdjacentHTML(
 				'beforeend',
 				`<option>${obj.title}</option>`
@@ -103,9 +104,9 @@ $('form').addEventListener('submit', event => {
 		}
 
 		//Enviar datos
-		fetch('http://localhost:3000/recipe_book', {
-			method: 'PUT',
-			body: JSON.stringify({ forms: newForms })
+		fetch(PATH.keep, {
+			method: 'PATCH',
+			body: JSON.stringify({ recipe_book: newForms })
 		})
 			.then(manage)
 			.then(json => console.log(json))

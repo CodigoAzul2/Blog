@@ -9,14 +9,15 @@ const load = path => {
 $('#home').addEventListener('click', () => load())
 
 const $recipOpt = $('#recipOpt')
-fetch('http://localhost:3000/recipe_book')
+fetch(PATH.keep)
 	.then(manage)
 	.then(json => {
+		json = json.recipe_book
 		console.log(json)
 
 		//Insertar recetas
 		const $edit = $('#edit')
-		json.forms.forEach(obj => {
+		json.forEach(obj => {
 			const makeUl = text => text
 				.replace(/^[^>].*$/gm, '<li>$&</li>')
 				.replace(/^>.*$/gm, s => {
@@ -31,7 +32,7 @@ fetch('http://localhost:3000/recipe_book')
 					<button type="button" class="closeModel">Cerrar</button>
 					<h2>${obj.title}</h2>
 					${obj.subtitle ? `<h3 class="sub-title">${obj.subtitle}</h3>` : ''}
-					<img src="${obj.photo ?? ''}" style="display: ${obj.photo ? 'block': 'none'};" />
+					<img src="${obj.photo ?? ''}" style="display: ${obj.photo ? 'block' : 'none'};" />
 					<ul>
 						<li>
 							<h3>INGREDIENTES:</h3>
@@ -58,7 +59,7 @@ fetch('http://localhost:3000/recipe_book')
 				prev.push({ act: curr, dlg: waiters[i] })
 				return prev
 			}, [])
-			
+
 			actuators.forEach(act => {
 				act.addEventListener('click', e => {
 					tempArr.find(pair => pair.act === e.target).dlg[action]()
@@ -73,7 +74,10 @@ fetch('http://localhost:3000/recipe_book')
 
 		$('.preloader').style.display = 'none'
 	})
-	.catch(err => console.warn(err))
+	.catch(err => {
+		alert('No se ha podido acceder a las recetas.')
+		console.warn(err)
+	})
 
 //============> BÚSQUEDA <==============
 const $search = $('#search')
@@ -113,18 +117,21 @@ $('form').addEventListener('submit', event => {
 	const account = { user, pass }
 
 	//Acceso
-	fetch('http://localhost:3000/account')
+	fetch(PATH.keep)
 		.then(manage)
 		.then(data => {
+			data = data.account
 			console.log('json', data)
 
 			if (JSON.stringify(data) === JSON.stringify(account)) {
 				if (formData.newUser || formData.newPass) {
-					fetch('http://localhost:3000/account', {
-						method: 'PUT',
+					fetch(PATH.keep, {
+						method: 'PATCH',
 						body: JSON.stringify({
-							user: formData.newUser,
-							pass: formData.newPass,
+							account: {
+								user: formData.newUser,
+								pass: formData.newPass,
+							}
 						}),
 					})
 						.then(manage)
