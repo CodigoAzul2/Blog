@@ -5,7 +5,7 @@ export const manage = res => (res.ok ? res.json() : Promise.reject(`ERROR => ${r
 
 //Rutas
 export const PATH = {
-	keep: 'https://codigoazul2.github.io/Blog/JS/keep.json',
+	pack: 'JS/keep.json',
 	index: './index.html',
 	edit: './edit.html'
 }

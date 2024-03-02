@@ -9,7 +9,7 @@ const load = path => {
 $('#home').addEventListener('click', () => load())
 
 const $recipOpt = $('#recipOpt')
-fetch(PATH.keep)
+fetch(PATH.pack)
 	.then(manage)
 	.then(json => {
 		json = json.recipe_book
@@ -117,7 +117,7 @@ $('form').addEventListener('submit', event => {
 	const account = { user, pass }
 
 	//Acceso
-	fetch(PATH.keep)
+	fetch(PATH.pack)
 		.then(manage)
 		.then(data => {
 			data = data.account
@@ -125,7 +125,7 @@ $('form').addEventListener('submit', event => {
 
 			if (JSON.stringify(data) === JSON.stringify(account)) {
 				if (formData.newUser || formData.newPass) {
-					fetch(PATH.keep, {
+					fetch(PATH.pack, {
 						method: 'PATCH',
 						body: JSON.stringify({
 							account: {

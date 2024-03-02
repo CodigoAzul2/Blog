@@ -27,7 +27,7 @@ $$('input[name="modify"]').forEach(inp => {
 //============> RECETAS <==============
 let lastFormData
 const catArr = []
-fetch(PATH.keep)
+fetch(PATH.pack)
 	.then(manage)
 	.then(data => {
 		data = data.recipe_book
@@ -104,7 +104,7 @@ $('form').addEventListener('submit', event => {
 		}
 
 		//Enviar datos
-		fetch(PATH.keep, {
+		fetch(PATH.pack, {
 			method: 'PATCH',
 			body: JSON.stringify({ recipe_book: newForms })
 		})
