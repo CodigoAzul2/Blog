@@ -128,7 +128,6 @@
 	top: 0;
 	left: 0;
 	padding: 5px 15px;
-	background-color: var(--cAside);
 	background-image: linear-gradient(var(--cAside1), 1%, var(--cAside2));
 	height: 100%;
 	box-sizing: border-box;
