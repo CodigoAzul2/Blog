@@ -1,7 +1,13 @@
 //Funciones
 export const $ = path => document.querySelector(path)
 export const $$ = path => document.querySelectorAll(path)
-export const manage = res => (res.ok ? res.json() : Promise.reject(`ERROR => ${res.status}`))
+export const manage = res => {
+	if (res.ok) {
+		console.log('Estado:', res.status)
+		return res.json()
+	}
+	else Promise.reject(`ERROR |=> ${res.status}`)
+}
 
 //Rutas
 export const PATH = {

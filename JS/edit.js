@@ -25,11 +25,12 @@ $$('input[name="modify"]').forEach(inp => {
 })
 
 //============> RECETAS <==============
-let lastFormData
+let lastFormData, account
 const catArr = []
 fetch(PATH.pack)
 	.then(manage)
 	.then(data => {
+		account = data.account
 		data = data.recipe_book
 		console.log(data)
 		lastFormData = data
@@ -74,7 +75,7 @@ $('form').addEventListener('submit', event => {
 		reader.addEventListener('load', () => fetchPUT(reader.result))
 		reader.readAsDataURL(img) //Crear URL
 	} else fetchPUT()
-	load()
+	// load()
 
 	function fetchPUT(url) {
 		let newForms
@@ -102,11 +103,15 @@ $('form').addEventListener('submit', event => {
 				}
 			]
 		}
+		console.log('newForms', newForms)
 
 		//Enviar datos
 		fetch(PATH.pack, {
-			method: 'PATCH',
-			body: JSON.stringify({ recipe_book: newForms })
+			method: 'PUT',
+			body: JSON.stringify({
+				recipe_book: newForms,
+				account: account
+			})
 		})
 			.then(manage)
 			.then(json => console.log(json))
