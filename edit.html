@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="es-ES" translate="no">
+
+<head>
+	<meta charset="UTF-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<title>Edición</title>
+
+	<link rel="icon" href="/Recursos/chef_icon.png" />
+	<link rel="stylesheet" href="/CSS/common.css" />
+	<link rel="stylesheet" href="/CSS/edit.css" />
+
+	<script type="module" src="/JS/edit.js" defer></script>
+</head>
+
+<body class="background">
+	<main class="main">
+		<header class="header">
+			<article class="link">
+				<svg viewBox="0 0 24 24">
+					<path
+						d="M19,11H9l3.29-3.29a1,1,0,0,0,0-1.42,1,1,0,0,0-1.41,0l-4.29,4.3A2,2,0,0,0,6,12H6a2,2,0,0,0,.59,1.4l4.29,4.3a1,1,0,1,0,1.41-1.42L9,13H19a1,1,0,0,0,0-2Z" />
+				</svg>
+				Inicio
+			</article>
+			<h1>EDICIÓN</h1>
+		</header>
+
+		<form>
+			<section class="modify">
+				<article>
+					<label for="change">Modificar:</label>
+					<input type="radio" name="modify" id="change" value="change">
+				</article>
+
+				<article>
+					<label for="remove">Eliminar:</label>
+					<input type="radio" name="modify" id="remove" value="remove">
+				</article>
+
+				<article class="choose">
+					<label for="choose">Elegir:</label>
+					<select name="choose" id="choose"></select>
+				</article>
+
+				<button type="button" id="copy">Copiar receta actual</button>
+			</section>
+
+			<section>
+				<label for="title">*Título:</label>
+				<input type="text" name="title" id="title" maxlength="30" required />
+			</section>
+
+			<section>
+				<label for="subtitle">Subtítulo:</label>
+				<input type="text" name="subtitle" id="subtitle" size="48" />
+			</section>
+
+			<section>
+				<label for="category">Categoría:</label>
+				<input type="text" name="category" id="category" list="catList" autocomplete="off">
+				<datalist id="catList"></datalist>
+			</section>
+
+			<section>
+				<label for="photo">Fotografía:</label>
+				<input type="file" accept="image/*" name="photo" id="photo">
+			</section>
+
+			<section>
+				<p>Por cada 'Intro', se crea otro item.</p>
+				<p>Por cada '>', se anida el item un nivel más.</p>
+			</section>
+
+			<section>
+				<label for="ingredients">Ingredientes:</label>
+				<textarea name="ingredients" id="ingredients" cols="50" rows="5"></textarea>
+			</section>
+
+			<section>
+				<label for="preparation">Preparación:</label>
+				<textarea name="preparation" id="preparation" cols="50" rows="5"></textarea>
+			</section>
+
+			<nav>
+				<button type="reset" id="erase">Restaurar</button>
+				<button type="submit">Actualizar</button>
+			</nav>
+		</form>
+	</main>
+	<re-foot></re-foot>
+</body>
+
+</html>
