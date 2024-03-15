@@ -1,7 +1,3 @@
-:root {
-	--wAside: 250px;
-}
-
 /* PRELOADER */
 .preloader {
 	position: absolute;
@@ -14,6 +10,7 @@
 	background-color: var(--cFocus);
 
 	&:after {
+		color: var(--cAside1);
 		content: " ";
 		display: block;
 		width: 20vmin;
@@ -21,8 +18,8 @@
 		aspect-ratio: 1 / 1;
 		margin: auto;
 		border-radius: 50%;
-		border: 5vmin solid var(--cAside2);
-		border-color: var(--cAside2) transparent var(--cAside2) transparent;
+		border: 5vmin solid currentColor;
+		border-color: currentColor transparent currentColor transparent;
 		animation: preload 1.2s linear infinite;
 	}
 }
@@ -56,6 +53,7 @@
 	background-color: var(--cColor);
 	font-size: 2.2em;
 	text-decoration: underline;
+	box-shadow: 0 0 20px var(--cColor);
 }
 
 /* ASIDE */
@@ -73,7 +71,7 @@
 	left: var(--wAside);
 	padding: 5px;
 	border-radius: 0 8px 8px 0;
-	background-image: linear-gradient(var(--cAside1) -5px, 1%, var(--cAside2) 100vh);
+	background-image: linear-gradient(var(--cAside1) -5px, 0.1%, var(--cAside2) 200vh);
 	display: flex;
 	flex-direction: column;
 	justify-content: space-evenly;
@@ -81,7 +79,7 @@
 	transition: left 0.5s;
 
 	div {
-		background-color: var(--cBlack);
+		background-color: var(--cText);
 		height: 2px;
 		width: 100%;
 		border-radius: 10px;
@@ -128,11 +126,16 @@
 	top: 0;
 	left: 0;
 	padding: 5px 15px;
-	background-image: linear-gradient(var(--cAside1), 1%, var(--cAside2));
+	background-image: linear-gradient(var(--cAside1), 0.1%, var(--cAside2) 200%);
 	height: 100%;
 	box-sizing: border-box;
 	width: var(--wAside);
 	transition: left 0.5s;
+
+	svg {
+		width: 15px;
+		vertical-align: -2px;
+	}
 }
 
 #hidden:checked + label {
@@ -174,16 +177,6 @@
 #home, #edit {
 	margin-block: 5px;
 
-	&::before {
-		content: '';
-		vertical-align: -2px;
-		display: inline-block;
-		width: 15px;
-		height: 15px;
-		background-size: cover;
-		margin-right: 5px;
-	}
-
 	&::after {
 		content: '';
 		display: block;
@@ -203,18 +196,12 @@
 	}
 }
 
-#home::before {
-	background-image: url('../Recursos/home.png');
-}
-
-#edit::before {
-	background-image: url('../Recursos/pencil.png');
-}
-
 /* FIN DE ASIDE COMO TAL */
 dialog {
+	color: inherit;
 	border: none;
 	border-radius: 5px;
+	background-color: var(--cWhite);
 	visibility: hidden;
 	animation: bounce 0.7s ease-in-out 0.2s forwards;
 
@@ -242,7 +229,6 @@ dialog {
 			font-weight: bolder;
 			font-size: small;
 			color: var(--cSub);
-			filter: drop-shadow(0 0 1px var(--cWhite)) drop-shadow(0 0 1px var(--cWhite)) drop-shadow(0 0 1px var(--cWhite)) drop-shadow(0 0 1px var(--cWhite)) drop-shadow(0 0 1px var(--cWhite)) drop-shadow(0 0 1px var(--cWhite));
 			text-align: center;
 		}
 
@@ -313,14 +299,7 @@ dialog {
 }
 
 #search {
-	background-color: var(--cSmooth);
-	border: 1px solid var(--cFormBorder);
-	border-radius: 2px;
 	min-width: 30%;
-
-	&:focus {
-		background-color: var(--cFocus);
-	}
 }
 
 @media (width < 480px) {
@@ -358,5 +337,11 @@ dialog {
 		ul {
 			padding-left: 20px;
 		}
+	}
+}
+
+@media (forced-colors: active) {
+	.aside {
+		background-color: canvas;
 	}
 }

@@ -1,14 +1,12 @@
-import { $, $$, manage, Foot, PATH } from './module.js'
+import { $, $$, manage, Foot, PATH, loader } from './module.js'
 customElements.define('re-foot', Foot)
-const load = path => {
-	if (!path) location.assign(PATH.edit)
-	else open(path, '_blank') ?? location.assign(path)
-}
+const load = path => loader(path, PATH.edit)
 
 //============> MODIFY <==============
 $('#erase').addEventListener('click', () => load())
 $('.link').addEventListener('click', () => load(PATH.index))
 
+//Estilos
 $$('input[name="modify"]').forEach(inp => {
 	inp.addEventListener('change', () => {
 		const removing = $('#remove').checked

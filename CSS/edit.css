@@ -21,7 +21,6 @@
 
 .link {
 	display: flex;
-	color: var(--cBlack);
 	background-color: var(--cLink);
 	font-size: large;
 	font-weight: bold;
@@ -32,19 +31,12 @@
 	box-shadow: 0 0 10px 2px var(--cLink);
 	transition: all 0.15s;
 
-	&::before {
-		content: "";
-		display: block;
-		width: 20px;
-		aspect-ratio: 1/1;
-		background-image: url('../Recursos/arrow.png');
-		background-position: center;
-		background-size: cover;
-		background-repeat: space;
-	}
-
 	&:hover {
 		transform: scale(120%);
+	}
+
+	svg {
+		width: 20px;
 	}
 }
 
@@ -66,18 +58,6 @@ form {
 	textarea {
 		font-family: Arial;
 		font-size: small;
-
-		&:focus {
-			background-color: var(--cFocus);
-		}
-	}
-
-	input,
-	textarea,
-	select {
-		background-color: var(--cSmooth);
-		border: 1px solid var(--cFormBorder);
-		border-radius: 2px;
 	}
 
 	.modify {
@@ -94,15 +74,15 @@ form {
 			justify-content: space-between;
 			align-items: center;
 
-			&:not(:has(:checked))~.choose {
+			&:not(:has(:checked)) ~ .choose {
 				display: none;
 			}
 
-			&:has(:checked)~.choose {
+			&:has(:checked) ~ .choose {
 				display: flex;
 			}
 
-			&:has(#change:checked)~#copy {
+			&:has(#change:checked) ~ #copy {
 				display: block;
 			}
 		}
@@ -115,9 +95,5 @@ form {
 	p {
 		font-style: italic;
 		margin: 0;
-	}
-
-	button {
-		mix-blend-mode: exclusion;
 	}
 }

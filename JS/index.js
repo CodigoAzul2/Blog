@@ -1,9 +1,7 @@
-import { $, $$, manage, Foot, PATH } from './module.js'
+import { $, $$, manage, Foot, PATH, makeUl, relate, loader } from './module.js'
 customElements.define('re-foot', Foot)
-const load = path => {
-	if (!path) location.assign(PATH.index)
-	else open(path, '_blank') ?? location.assign(path)
-}
+const load = path => loader(path, PATH.index)
+
 //============> CONECTAR <==============
 //Redirigir
 $('#home').addEventListener('click', () => load())
@@ -18,13 +16,6 @@ fetch(PATH.pack)
 		//Insertar recetas
 		const $edit = $('#edit')
 		json.forEach(obj => {
-			const makeUl = text => text
-				.replace(/^[^>].*$/gm, '<li>$&</li>')
-				.replace(/^>.*$/gm, s => {
-					const count = s.match(/^>+/)[0].length
-					return `${'<ul>'.repeat(count)}<li>${s.substring(count)}</li>${'</ul>'.repeat(count)}`
-				})
-
 			$edit.insertAdjacentHTML(
 				'beforebegin',
 				`<section>${obj.title}</section>
@@ -53,19 +44,6 @@ fetch(PATH.pack)
 			)
 		})
 
-		//Funcionalidad
-		function relate(actuators, waiters, action) {
-			const tempArr = [...actuators].reduce((prev, curr, i) => {
-				prev.push({ act: curr, dlg: waiters[i] })
-				return prev
-			}, [])
-
-			actuators.forEach(act => {
-				act.addEventListener('click', e => {
-					tempArr.find(pair => pair.act === e.target).dlg[action]()
-				})
-			})
-		}
 		const $$recipes = [...$$('aside > section:not([id])'), $edit]
 		const $$dialogs = $$('dialog')
 		const $$close = $$('button.closeModel')
@@ -107,7 +85,6 @@ $('#changeAccount').addEventListener('change', () => {
 	$newUser.toggleAttribute('required')
 })
 
-//***Usar action para enviarlo a otro archivo (más fácil)
 $('form').addEventListener('submit', event => {
 	event.preventDefault()
 	const formData = Object.fromEntries(new FormData(event.target))
