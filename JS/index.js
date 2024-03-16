@@ -1,4 +1,4 @@
-import { $, $$, manage, Foot, PATH, makeUl, relate, loader } from './module.js'
+import { $, $$, manage, Foot, PATH, makeUl, relate, loader, format } from './module.js'
 customElements.define('re-foot', Foot)
 const load = path => loader(path, PATH.index)
 
@@ -27,11 +27,11 @@ fetch(PATH.pack)
 					<ul>
 						<li>
 							<h3>INGREDIENTES:</h3>
-							<ul>${makeUl(obj.ingredients)}</ul>
+							<ul>${format(makeUl(obj.ingredients))}</ul>
 						</li>
 						<li>
 							<h3>PREPARACIÓN:</h3>
-							<ul>${makeUl(obj.preparation)}</ul>
+							<ul>${format(makeUl(obj.preparation))}</ul>
 						</li>
 					</ul>
 					<p class="foot-page"><span>Monitora:</span> Reyes García Delgado</p>

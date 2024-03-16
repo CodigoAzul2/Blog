@@ -40,6 +40,44 @@
 	}
 }
 
+section#info {
+	justify-content: end;
+	border: none;
+
+	.info-button {
+		color: var(--cBlack);
+		width: 20px;
+		background-color: var(--cWhite);
+		aspect-ratio: 1 / 1;
+		border-radius: 50%;
+		border: 1px solid currentColor;
+		font-style: oblique;
+		font-family: inherit;
+	}
+
+	.info-dialog {
+		color: inherit;
+		border: none;
+		border-radius: 5px;
+		background-color: var(--cWhite);
+		visibility: hidden;
+		animation: bounce 0.7s ease-in-out 0.2s forwards;
+		box-shadow:
+			-2vmin -2vmin var(--cShadeSec1),
+			2vmin 2vmin var(--cShadeSec2),
+			0 0 10vmin var(--cBlack);
+
+		p {
+			font-style: normal;
+			margin: 0;
+		}
+
+		button {
+			float: right;
+		}
+	}
+}
+
 form {
 	width: 80%;
 	max-width: 800px;
@@ -86,14 +124,5 @@ form {
 				display: block;
 			}
 		}
-	}
-
-	section:has(p) {
-		justify-content: space-evenly;
-	}
-
-	p {
-		font-style: italic;
-		margin: 0;
 	}
 }

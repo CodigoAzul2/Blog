@@ -3,8 +3,14 @@ customElements.define('re-foot', Foot)
 const load = path => loader(path, PATH.edit)
 
 //============> MODIFY <==============
+//Recargas
 $('#erase').addEventListener('click', () => load())
 $('.link').addEventListener('click', () => load(PATH.index))
+
+//Dialog para info de texto
+const info = $('.info-dialog')
+$('.info-button').addEventListener('click', () => info.show())
+$('.info-dialog > button').addEventListener('click', () => info.close())
 
 //Estilos
 $$('input[name="modify"]').forEach(inp => {
